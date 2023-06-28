@@ -13,7 +13,7 @@ export default async function handler(
     const repo = await repositorio.find();
 
     //res.status(202).end();
-    res.status(200).json(repo);
+    res.status(200).json({ repo });
   } else {
     res.status(500).end();
   }

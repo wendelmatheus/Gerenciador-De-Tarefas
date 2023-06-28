@@ -7,7 +7,7 @@ export default function Home() {
   >([]);
 
   useEffect(() => {
-    var urlencoded = new URLSearchParams();
+    //var urlencoded = new URLSearchParams();
 
     var requestOptions = {
       method: "GET",
@@ -21,11 +21,11 @@ export default function Home() {
         }
       })
       .then((result) => {
-        const aux = result;
-        console.log(aux);
+        const tarefas: [] = result.repo;
+        setLista(tarefas);
       })
       .catch((error) => console.log("error", error));
-    console.log(lista);
+    //console.log(lista);
   }, []);
 
   return (
