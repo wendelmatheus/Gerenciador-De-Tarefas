@@ -11,16 +11,19 @@ export default function Home() {
 
     var requestOptions = {
       method: "GET",
-      body: urlencoded,
+      //body: urlencoded,
     };
 
     fetch("/api/consultar", requestOptions)
       .then((response) => {
         if (response.status == 200) {
-          response;
+          return response.json();
         }
       })
-      .then((result) => console.log(result))
+      .then((result) => {
+        const aux = result;
+        console.log(aux);
+      })
       .catch((error) => console.log("error", error));
     console.log(lista);
   }, []);
