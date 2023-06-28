@@ -2,8 +2,13 @@ import { AppDataSource } from "@/db/controlador/conexaoBanco";
 import { Tarefas } from "@/db/modelo/Tarefas";
 import { NextApiRequest, NextApiResponse } from "next";
 
+function transformarEmMinusculo(palavra: string) {
+  return palavra.toLowerCase();
+}
+
 function verificarDados(id: string, completed: string) {
-  return (id ?? "") !== "" && (completed == "false" || completed == "true");
+  const _completed = transformarEmMinusculo(completed);
+  return (id ?? "") !== "" && (_completed == "false" || _completed == "true");
 }
 
 export default async function handler(
@@ -15,25 +20,27 @@ export default async function handler(
 
   if (conexao) {
     if (verificarDados(id, completed)) {
+      const completedMinusculo = transformarEmMinusculo(completed);
+
       const repositorio = conexao.getRepository(Tarefas);
-      const _id = Number(id);
-      const _completed = Boolean(completed);
-
-      console.log(typeof false);
-      console.log(typeof _completed);
-
       try {
-        await repositorio
-          .createQueryBuilder()
-          .update(Tarefas)
-          .set({ completed: completed ?? "true" })
-          .where("id = :id", { id: _id })
-          .execute();
+        const _id = parseInt(id);
+        const _completed = completedMinusculo === "true";
 
-        res.status(200).json({ mensagem: "OK" });
+        console.log(typeof false);
+        console.log("aqui -> " + completedMinusculo);
+
+        try {
+          await repositorio.save({ id: _id, completed: _completed });
+
+          res.status(200).json({ mensagem: "OK" });
+        } catch (error) {
+          console.error(error);
+          res.status(500).json({ message: "Erro ao atualizar o item" });
+        }
       } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Erro ao atualizar o item" });
+        console.log("Erro -> ", error);
+        throw error;
       }
     } else {
       res.status(400).end();
