@@ -8,6 +8,8 @@ export default function Home() {
     { id: number; title: string; completed: boolean }[]
   >([]);
 
+  const [checkedState, setCheckedState] = useState(new Array(lista.length));
+
   useEffect(() => {
     //var urlencoded = new URLSearchParams();
 
@@ -58,6 +60,30 @@ export default function Home() {
       .catch((error) => console.log("error", error));
   }
 
+  function handleClickUpdate(id: number, completed: boolean) {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+    var urlencoded = new URLSearchParams();
+    urlencoded.append("id", `${id}`);
+    urlencoded.append("completed", `${!completed}`);
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: urlencoded,
+    };
+
+    fetch("/api/update", requestOptions)
+      .then((response) => {
+        if (response.status == 200) {
+          router.reload();
+        }
+      })
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+  }
+
   return (
     <div>
       <Head>
@@ -70,12 +96,18 @@ export default function Home() {
         redirecionarBotao="/adicionar"
       ></Menu>
       <div className="items-center mx-auto max-w-4xl">
-        {lista.map((item) => (
+        {lista.map((item, index) => (
           <div className="">
             <div className="bg-blue-400 text-white flex justify-between m-2 p-2">
               {item.title}
               <div className="flex flex-row">
-                <input type="checkbox" />
+                <input
+                  id={`tarefa-id-${index}`}
+                  type="checkbox"
+                  onChange={() => handleClickUpdate(item.id, item.completed)}
+                  checked={item.completed}
+                  //onChange={() => handleOnChecked(index)}
+                />
                 <svg
                   onClick={() => handleClickRemover(item.id)}
                   xmlns="http://www.w3.org/2000/svg"
