@@ -1,17 +1,14 @@
-import Link from "next/link";
-
-interface BotaoProps {
-  children?: string;
-  nomeBotao?: string;
-  redirecionar?: string;
+namespace Botao {
+  export interface BotaoProps {
+    children?: string;
+    texto?: string;
+  }
 }
 
-export default function Botao(props: BotaoProps) {
+export default function Botao({ texto, ...props }: Botao.BotaoProps) {
   return (
-    <Link href={props.redirecionar || "/"}>
-      <button className="bg-white rounded-lg text-blue-800 hover:bg-gray-100 text-lg px-4 py-2">
-        {props.nomeBotao}
-      </button>
-    </Link>
+    <button className="w-full text-sm bg-blue-500 hover:bg-blue-600 px-6 py-2 rounded text-white shadow">
+      {texto}
+    </button>
   );
 }
