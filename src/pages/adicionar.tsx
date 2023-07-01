@@ -1,4 +1,7 @@
+import Botao from "@/view/components/Botao";
+import Input from "@/view/components/Input";
 import Menu from "@/view/components/Menu";
+import MeuLink from "@/view/components/MeuLink";
 import Head from "next/head";
 import router from "next/router";
 import { useState } from "react";
@@ -41,26 +44,26 @@ export default function Adicionar() {
       <Head>
         <title>Adicionar Tarefa</title>
       </Head>
+
       <Menu titulo="Adicionar Tarefa"></Menu>
+
       <div className="items-center mx-auto max-w-4xl flex flex-col">
-        <input
-          onChange={(e) => setTarefa(e.target.value)}
-          type="text"
-          placeholder="Digite o nome da Tarefa..."
-          className="w-full bg-gray-50 border border-gray-300 focus:border-blue-500 rounded px-3 py-2 m-4 text-base text-gray-800 placeholder-gray-300 focus:outline-none"
-        />
-        <button
-          onClick={handleClickAdicionar}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-2 rounded-full"
-        >
-          Adicionar
-        </button>
-        <a
-          className="text-blue-500 hover:text-blue-700 text-decoration-line: underline"
+        <Input
+          placeholder="Digite o nome da Tarefa"
+          meuOnChange={(e) => setTarefa(e.target.value)}
+          margem="4"
+        ></Input>
+
+        <Botao padding="2" bold bordaRedonda texto="Adicionar"></Botao>
+
+        <MeuLink
           href="/"
-        >
-          Voltar
-        </a>
+          texto="Voltar"
+          cor="blue-500"
+          corHover="blue-700"
+          tamanhoTexto="base"
+          padding="2"
+        ></MeuLink>
       </div>
     </div>
   );

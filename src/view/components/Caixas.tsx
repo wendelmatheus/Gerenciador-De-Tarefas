@@ -32,7 +32,7 @@ export default function CaixaLogin() {
       </div>
 
       <div>
-        <Botao texto="Login"></Botao>
+        <Botao preencherLargura texto="Login"></Botao>
       </div>
     </MeuContainer>
   );
@@ -79,7 +79,7 @@ export function CaixaCadastro() {
       </div>
 
       <div>
-        <Botao texto="Cadastre-se"></Botao>
+        <Botao preencherLargura texto="Cadastre-se"></Botao>
       </div>
     </MeuContainer>
   );
